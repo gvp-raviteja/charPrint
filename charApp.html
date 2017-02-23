@@ -3,42 +3,82 @@
 <head>
 	<title>Raviteja Test APP</title>
 </head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script type="text/javascript">
+	function isValid(input){
+		var flag = false,i=0;
+		while(i<input.length){
+			if(flag){
+				if(!(input[i]>='0' && input[i]<='9'))
+					return false;
+				while(i<input.length && input[i]>='0' && input[i]<='9')
+					i++;
+				flag = false;
+			}
+			else{
+				if(!(input[i]>='a' && input[i]<='z'))
+					return false;
+				i++;
+				flag = true;
+			}
+		}
+		return true;
+	}
+
 	function convert(input) {
 		var c;
 		var output = "",count;
 		var len = input.length;
 		var i=0 , flag=false;
-		while(i < input.length) {
-			if(flag){
-				c = input.charAt(i).toUpperCase();
-				flag = false;
-			}
-			else{
-				c = input.charAt(i);
-				flag = true;
-			}
-			i++;
-			count = parseInt(input.substr(i));
-			while(count--)
-				output = output + c;
-			while(i<input.length && input.charAt(i)>='0' && input.charAt(i)<='9')
+		if(isValid(input)){
+			while(i < input.length) {
+				if(flag){
+					c = input.charAt(i).toUpperCase();
+					flag = false;
+				}
+				else{
+					c = input.charAt(i);
+					flag = true;
+				}
 				i++;
+				count = parseInt(input.substr(i));
+				while(count--)
+					output = output + c;
+				while(i<input.length && input.charAt(i)>='0' && input.charAt(i)<='9')
+					i++;
+			}
+			console.log(output);
+			document.getElementById("output").innerHTML = "<b>output</b>:" + output;
 		}
-		console.log(output);
-		document.getElementById("text").value = output;
-		return output;
+		else
+			document.getElementById("output").innerHTML = "Invalid Input";
 	}
 </script>
 <script type="text/javascript">
 	function clr() {
 		console.log("clear");
 		document.getElementById("text").value = '';
+		document.getElementById("output").innerHTML = '';
+
 	}
 </script>
 <body>
-		<input type="text" name="text" id="text">
-		<button id="btn1" onclick="convert(document.getElementById('text').value)">SUBMIT</button>
-		<button id="btn2" onclick="clr()">CLEAR</button>
+	<div  class="container">
+		<div class="jumbotron">
+			<div> <h3>Sample App</h3> </div>
+			<div> given input of form "a2b3c4d3", the output should be "aaBBBccccDDD" </div>
+			<br>
+			<b>constraints</b>: <br>The input is always valid i.e. always have character and numbers followed by each other <br>
+			The start of string is always a character and end of string is always a numerical value <br>
+			<br>
+			<div>Enter your input here</div>
+			<input type="text" class="form-control" name="text" id="text">
+			<span id="output"></span>
+			<br>
+			<br>
+			<button id="btn1" class="btn btn-primary" onclick="convert(document.getElementById('text').value)">SUBMIT</button>
+			<button id="btn2" class="btn btn-primary" onclick="clr()">CLEAR</button>
+		</div>
+	</div>
 </body>
 </html>
