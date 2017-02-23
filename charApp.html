@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Raviteja Test APP</title>
+</head>
+<script type="text/javascript">
+	function convert(input) {
+		var c;
+		var output = "",count;
+		var len = input.length;
+		var i=0 , flag=false;
+		while(i < input.length) {
+			if(flag){
+				c = input.charAt(i).toUpperCase();
+				flag = false;
+			}
+			else{
+				c = input.charAt(i);
+				flag = true;
+			}
+			i++;
+			count = parseInt(input.substr(i));
+			while(count--)
+				output = output + c;
+			while(i<input.length && input.charAt(i)>='0' && input.charAt(i)<='9')
+				i++;
+		}
+		console.log(output);
+		document.getElementById("text").value = output;
+		return output;
+	}
+</script>
+<script type="text/javascript">
+	function clr() {
+		console.log("clear");
+		document.getElementById("text").value = '';
+	}
+</script>
+<body>
+		<input type="text" name="text" id="text">
+		<button id="btn1" onclick="convert(document.getElementById('text').value)">SUBMIT</button>
+		<button id="btn2" onclick="clr()">CLEAR</button>
+</body>
+</html>
